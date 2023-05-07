@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <errno.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
@@ -6,9 +7,47 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
+#include <signal.h>
+#include <pthread.h>
 
 #include "server.h"
 #include "macro.h"
+
+static pthread_t s_server_thread_id; 
+static volatile sig_atomic_t s_server_running = PROXY_SERVER_RUNNING;
+static int s_listenfd = -1;
+
+static void terminate_listenfd_atomic() {
+    sigset_t set, oldset;
+    sigemptyset(&set);
+
+    sigaddset(&set, SIGHUP);
+
+    sigprocmask(SIG_BLOCK, &set, &oldset);
+    if(s_listenfd != -1) {
+        close(s_listenfd);
+        s_listenfd = -1;
+    }
+    sigprocmask(SIG_SETMASK, &oldset, NULL);
+}
+
+static void terminate_handler(int signum) {
+    if(s_server_thread_id != pthread_self()) {
+        pthread_kill(s_server_thread_id, signum);
+    } else {
+        /* ensures that main_thread is the only one that handles terminate */
+        s_server_running = PROXY_SERVER_TERMINATED;
+        terminate_listenfd_atomic();
+    }
+}
+
+static void set_signals() {
+    struct sigaction act;
+    memset(&act, 0x0, sizeof(act));
+    act.sa_handler = terminate_handler;
+
+    sigaction(SIGHUP, &act, NULL);
+}
 
 static int32_t parse_port(char *port) {
     if(port == NULL) {
@@ -101,24 +140,70 @@ int run_proxy_server(char *port) {
         return -1;
     }
 
-    int listenfd = setup_listenfd(port);
-    if(listenfd == -1) {
+    s_listenfd = setup_listenfd(port);
+    if(s_listenfd == -1) {
         return -1;
     }
+
+    s_server_thread_id = pthread_self();
+    set_signals();
 
     struct sockaddr_storage accept_addr;
     socklen_t addrlen;
 
     printf("Proxy server is now listening on port %s\n", port);
 
-    while(PROXY_SERVER_RUNNING) {
+    while(s_server_running == PROXY_SERVER_RUNNING) {
         addrlen = sizeof(accept_addr);
-        int connfd = accept(listenfd, (struct sockaddr *)&accept_addr, &addrlen);  
+
+        int connfd = accept(s_listenfd, (struct sockaddr *)&accept_addr, &addrlen);  
         if(connfd == -1) {
-            perror("accept");
-            close(listenfd);
-            return -1;
+            s_server_running = PROXY_SERVER_TERMINATED;
+            terminate_listenfd_atomic();
         }
+        // possibly accept finished but the signal terminate happened here
+        if(s_server_running == PROXY_SERVER_TERMINATED) {
+            if(connfd != -1)
+                close(connfd);
+            break;
+        }
+        //char *stream_buf;
+        //size_t sz;
+
+        //FILE *fstream; 
+
+        //fstream = open_memstream(&stream_buf, &sz);
+
+        //char buf[512];
+        //while(1) {
+        //    ssize_t nread, nwrite;
+
+        //    nread = recv(connfd, buf, 512, 0);
+        //    //if(nread == 0) {
+        //    //    close(connfd);
+        //    //    break;
+        //    //} else if(nread == -1) {
+        //    //    break;
+        //    //} else {
+        //    //    char *buf_ptr;
+
+        //    //    buf_ptr = buf;
+        //    //    while(nread > 0) {
+        //    //        nwrite = fwrite(buf_ptr, sizeof(char), 512, fstream);
+        //    //        if(nwrite == -1) {
+        //    //            if(errno == EINTR) {
+        //    //                nwrite = 0;
+        //    //            }
+        //    //        }
+        //    //        nread -= nwrite;
+        //    //        buf_ptr += nwrite;
+        //    //    }
+        //    //}
+        //}
+        //fclose(fstream);
+        //printf("%s", stream_buf);
+        //fflush(stdout);
+        //free(stream_buf);
 
         close(connfd);
     }
