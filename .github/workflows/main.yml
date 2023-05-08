@@ -1,0 +1,20 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Installing Dependencies
+      run: |
+        sudo apt-get install build-essential 
+    - uses: actions/checkout@v3
+    - name: Creating binary executable
+      run: make clean all
+    - name: Running Criterion Tests
+      run: ./bin/proxy_tests --verbose
