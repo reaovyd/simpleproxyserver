@@ -16,9 +16,9 @@ jobs:
         sudo apt-get install build-essential libffi-dev libgit2-dev pkg-config meson ninja-build 
     - name: Installing Testing Framework
       run: |
-        git clone https://github.com/Snaipe/Criterion.git
-        meson install -C build
-        ldconfig
+        sudo git clone https://github.com/Snaipe/Criterion.git
+        sudo meson install -C build
+        sudo ldconfig
     - uses: actions/checkout@v3
     - name: Creating binary executable
       run: make clean all
