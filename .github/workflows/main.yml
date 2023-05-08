@@ -13,12 +13,14 @@ jobs:
     - name: Installing Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install build-essential libffi-dev libgit2-dev pkg-config meson ninja-build 
+        sudo apt-get install build-essential libffi-dev libgit2-dev pkg-config meson ninja-build -y 
     - name: Installing Testing Framework
       run: |
         sudo git clone https://github.com/Snaipe/Criterion.git
+        cd Criterion
         sudo meson install -C build
         sudo ldconfig
+        cd ../
     - uses: actions/checkout@v3
     - name: Creating binary executable
       run: make clean all
