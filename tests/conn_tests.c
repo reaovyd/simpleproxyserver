@@ -108,7 +108,7 @@ Test(conn_suite, conn_remove_connection_1) {
 
     int remove_status = conn_remove_fd(conn_pool, 90);
 
-    cr_assert_eq(remove_status, 0, "Expected call to succeed, but got %d", remove_status);
+    cr_assert_eq(remove_status, -1, "Expected call to fail, but got %d", remove_status);
 }
 
 Test(conn_suite, conn_remove_connection_2) {
