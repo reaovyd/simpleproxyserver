@@ -1,5 +1,6 @@
 /*
- * Common file for sharing macros
+ * @file macro.h
+ * @brief Common file for sharing macros
  *
  */
 

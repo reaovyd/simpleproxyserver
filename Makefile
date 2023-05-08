@@ -28,7 +28,9 @@ INC := -I $(INCD)
 EXEC 	  := proxy
 TEST_EXEC := $(EXEC)_tests 
 
+
 LIB_TEST := -lcriterion 
+TST_FLAGS := -I $(TSTD) 
 
 .PHONY: all setup debug clean
 
@@ -47,7 +49,7 @@ $(BIND)/$(EXEC): $(ALL_OBJF)
 	$(CC) $^ -o $@ 
 
 $(BIND)/$(TEST_EXEC): $(TST_OBJF) $(TST_SRCF) $(TST_INCF)
-	$(CC) -I $(TSTD) $(LIB_TEST) $(INC) $(CFLAGS) $^ -o $@
+	$(CC) $(TST_FLAGS) $(LIB_TEST) $(INC) $(CFLAGS) $^ -o $@
 
 $(BLDD)/%.o: $(SRCD)/%.c $(ALL_INCF)
 	$(CC) $(CFLAGS) $(INC) $< -c -o $@ 

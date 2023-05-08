@@ -1,7 +1,15 @@
+/**
+ * @file server.h
+ * @brief This has a single function 
+ * where it begins to run the proxy 
+ * server.
+ *
+ */
+
 #ifndef SERVER_H
 #define SERVER_H
 
-/*
+/**
  * @brief This starts up a server on 
  * the calling thread. It takes as argument a 
  * port which must be an integer value. The 
