@@ -13,7 +13,7 @@ jobs:
     - name: Installing Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install build-essential libffi libgit2 pkg-config meson ninja 
+        sudo apt-get install build-essential libffi-dev libgit2-dev pkg-config meson ninja-build 
     - name: Installing Testing Framework
       run: |
         git clone https://github.com/Snaipe/Criterion.git
