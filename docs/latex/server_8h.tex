@@ -1,0 +1,40 @@
+\hypertarget{server_8h}{}\doxysection{include/server.h File Reference}
+\label{server_8h}\index{include/server.h@{include/server.h}}
+
+
+This has a single function where it begins to run the proxy server.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{server_8h_aaa5d1979c2396c93dddbbd7cc7ff0102}{run\+\_\+proxy\+\_\+server}} (char $\ast$port)
+\begin{DoxyCompactList}\small\item\em This starts up a server on the calling thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This has a single function where it begins to run the proxy server. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_8h_aaa5d1979c2396c93dddbbd7cc7ff0102}\label{server_8h_aaa5d1979c2396c93dddbbd7cc7ff0102}} 
+\index{server.h@{server.h}!run\_proxy\_server@{run\_proxy\_server}}
+\index{run\_proxy\_server@{run\_proxy\_server}!server.h@{server.h}}
+\doxysubsubsection{\texorpdfstring{run\_proxy\_server()}{run\_proxy\_server()}}
+{\footnotesize\ttfamily int run\+\_\+proxy\+\_\+server (\begin{DoxyParamCaption}\item[{char $\ast$}]{port }\end{DoxyParamCaption})}
+
+
+
+This starts up a server on the calling thread. 
+
+It takes as argument a port which must be an integer value. The server will create a new TCP socket that binds to the port specified by the argument {\itshape port}. Then, the server will be set up to listen for any new TCP connections and accept such connections. A client can send any HTTP request and the server will handle the request by directing the request to the actual server the user wants to access. The function fails when any of the socket system calls, memory allocation calls, or any other system calls fail. It also fails if the port is not a short integer when parsed by the function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port the server has its listening socket bind to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if server successfully runs and terminates. Otherwise, it returns -\/1. 
+\end{DoxyReturn}

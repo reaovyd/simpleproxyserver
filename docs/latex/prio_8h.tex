@@ -1,0 +1,113 @@
+\hypertarget{prio_8h}{}\doxysection{include/prio.h File Reference}
+\label{prio_8h}\index{include/prio.h@{include/prio.h}}
+
+
+A simple priority queue implemented by a binary heap.  
+
+
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{prio_8h_adcb61ef6149f1eefda2bb03e93ae2c78}\label{prio_8h_adcb61ef6149f1eefda2bb03e93ae2c78}} 
+typedef struct prio\+\_\+queue {\bfseries Prio\+Queue}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$ \mbox{\hyperlink{prio_8h_af9e5f48b48b0a1e433d8d8131b73d169}{prio\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes a new priority queue for the caller to use. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{prio_8h_aed22b96130938ab317c5e06e33fae093}{prio\+\_\+peek\+\_\+max}} (\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$pq, int $\ast$get\+\_\+max)
+\begin{DoxyCompactList}\small\item\em Takes an argument {\ttfamily get\+\_\+max}, a pointer given by the caller so that the function can copy to that address the max value of the priority queue {\ttfamily pq}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{prio_8h_ab5bebc94246b951e31d4ee91be888d63}{prio\+\_\+insert}} (\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$pq, int val)
+\begin{DoxyCompactList}\small\item\em Takes an argument {\ttfamily val}, a value given by the caller so that the function can insert this value into the priority queue. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{prio_8h_a51a22547f511e78a6ecd790eeff9a255}{prio\+\_\+remove\+\_\+max}} (\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$pq, int $\ast$get\+\_\+max)
+\begin{DoxyCompactList}\small\item\em This function operates the same as {\ttfamily prio\+\_\+peek\+\_\+max} expect for the fact that it removes the current top element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A simple priority queue implemented by a binary heap. 
+
+The priority queue is represented as an array. The operations supported are inserting into the priority queue, removing the max value from the priority queue, and getting the max value from priority queue. The capacity of the priority queue is bounded by a fixed size of 1024. The priority queue is implemented by a max heap. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{prio_8h_af9e5f48b48b0a1e433d8d8131b73d169}\label{prio_8h_af9e5f48b48b0a1e433d8d8131b73d169}} 
+\index{prio.h@{prio.h}!prio\_init@{prio\_init}}
+\index{prio\_init@{prio\_init}!prio.h@{prio.h}}
+\doxysubsubsection{\texorpdfstring{prio\_init()}{prio\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPrioQueue}{Prio\+Queue}}$\ast$ prio\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes a new priority queue for the caller to use. 
+
+On failure, it returns NULL, which is likely due to a malloc error.
+
+\begin{DoxyReturn}{Returns}
+On success, a pointer to the block that is allocated for the priority queue object. On failure, it returns NULL. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{prio_8h_ab5bebc94246b951e31d4ee91be888d63}\label{prio_8h_ab5bebc94246b951e31d4ee91be888d63}} 
+\index{prio.h@{prio.h}!prio\_insert@{prio\_insert}}
+\index{prio\_insert@{prio\_insert}!prio.h@{prio.h}}
+\doxysubsubsection{\texorpdfstring{prio\_insert()}{prio\_insert()}}
+{\footnotesize\ttfamily int prio\+\_\+insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$}]{pq,  }\item[{int}]{val }\end{DoxyParamCaption})}
+
+
+
+Takes an argument {\ttfamily val}, a value given by the caller so that the function can insert this value into the priority queue. 
+
+The function returns -\/1 and no insertion is done if the function fails. The function will fail if it attempts to add to a priority queue where the capacity of 1024 is reached.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pq} & A pointer to a priority queue object \\
+\hline
+{\em val} & The value to be inserted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the call succeeds. -\/1, otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{prio_8h_aed22b96130938ab317c5e06e33fae093}\label{prio_8h_aed22b96130938ab317c5e06e33fae093}} 
+\index{prio.h@{prio.h}!prio\_peek\_max@{prio\_peek\_max}}
+\index{prio\_peek\_max@{prio\_peek\_max}!prio.h@{prio.h}}
+\doxysubsubsection{\texorpdfstring{prio\_peek\_max()}{prio\_peek\_max()}}
+{\footnotesize\ttfamily int prio\+\_\+peek\+\_\+max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$}]{pq,  }\item[{int $\ast$}]{get\+\_\+max }\end{DoxyParamCaption})}
+
+
+
+Takes an argument {\ttfamily get\+\_\+max}, a pointer given by the caller so that the function can copy to that address the max value of the priority queue {\ttfamily pq}. 
+
+The function returns -\/1 and no copying is done if the function fails. The function will fail if there is nothing currently in the priority queue.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pq} & A pointer to a priority queue object \\
+\hline
+{\em get\+\_\+max} & A pointer to some address where the value at that address gets overwritten with the max value on success. Nothing happens if the function call fails. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the call succeeds. -\/1, otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{prio_8h_a51a22547f511e78a6ecd790eeff9a255}\label{prio_8h_a51a22547f511e78a6ecd790eeff9a255}} 
+\index{prio.h@{prio.h}!prio\_remove\_max@{prio\_remove\_max}}
+\index{prio\_remove\_max@{prio\_remove\_max}!prio.h@{prio.h}}
+\doxysubsubsection{\texorpdfstring{prio\_remove\_max()}{prio\_remove\_max()}}
+{\footnotesize\ttfamily int prio\+\_\+remove\+\_\+max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$}]{pq,  }\item[{int $\ast$}]{get\+\_\+max }\end{DoxyParamCaption})}
+
+
+
+This function operates the same as {\ttfamily prio\+\_\+peek\+\_\+max} expect for the fact that it removes the current top element. 
+
+Similar to {\ttfamily prio\+\_\+peek\+\_\+max}, the function fails and returns -\/1 if there is nothing inside the priority queue.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pq} & A pointer to a priority queue object \\
+\hline
+{\em get\+\_\+max} & a pointer to some address where the value at that address gets overwritten with the max value on success. Nothing happens if the function call fails. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the call succeeds. -\/1, otherwise. 
+\end{DoxyReturn}

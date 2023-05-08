@@ -1,0 +1,31 @@
+\hypertarget{structPrioQueue}{}\doxysection{Prio\+Queue Struct Reference}
+\label{structPrioQueue}\index{PrioQueue@{PrioQueue}}
+
+
+This is the structure that represents the priority queue.  
+
+
+
+
+{\ttfamily \#include \char`\"{}include/prio.\+h\char`\"{}}
+
+
+
+\doxysubsection{Detailed Description}
+This is the structure that represents the priority queue. 
+
+The operations below manipulate this object. The priority queue follows the max-\/heap invariant as we can quickly yield the maximum element. The structure is implemented as the following inside the source file\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct }prio\_queue \{}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} heap[MAX\_PRIO\_CAPACITY];}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} len;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{prio_8h}{prio.\+h}}\end{DoxyCompactItemize}

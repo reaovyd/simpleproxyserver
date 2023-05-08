@@ -1,0 +1,147 @@
+\hypertarget{conn_8h}{}\doxysection{include/conn.h File Reference}
+\label{conn_8h}\index{include/conn.h@{include/conn.h}}
+
+
+This interface is the specification for the {\ttfamily \mbox{\hyperlink{structConnectionPool}{Connection\+Pool}}} object which handles all of the current connections that the proxy server is handling.  
+
+
+{\ttfamily \#include $<$sys/select.\+h$>$}\newline
+Include dependency graph for conn.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=167pt]{conn_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{conn_8h_a65bb3d664e3b34ea8775d5fd59ca3c60}\label{conn_8h_a65bb3d664e3b34ea8775d5fd59ca3c60}} 
+typedef struct connection\+Pool {\bfseries Connection\+Pool}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$ \mbox{\hyperlink{conn_8h_a0340036eb0c84ec60969fe890b94ae81}{conn\+\_\+pool\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initializes a new connection pool to handle user connections. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{conn_8h_a827144fb78571fe9a99a0e700742293e}{conn\+\_\+insert\+\_\+fd}} (\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$conn\+\_\+pool, int fd)
+\begin{DoxyCompactList}\small\item\em Inserts a new connection into the connection pool. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{conn_8h_a686ebc70a031da05e49cc41194cba212}{conn\+\_\+remove\+\_\+fd}} (\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$conn\+\_\+pool, int fd)
+\begin{DoxyCompactList}\small\item\em Removes a connection from the connection pool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{conn_8h_ae2fdf6d8b120978ce2e0e99d96957abb}{conn\+\_\+destroy}} (\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$conn\+\_\+pool)
+\begin{DoxyCompactList}\small\item\em TODO honestly fix this and make it mroe clear. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{conn_8h_aab42b966daaa88813b48d8448b06a3c7}{conn\+\_\+copy\+\_\+fd\+\_\+sets}} (\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$conn\+\_\+pool, fd\+\_\+set $\ast$rd\+\_\+set\+\_\+cpy, fd\+\_\+set $\ast$wr\+\_\+set\+\_\+cpy, int $\ast$nfds)
+\begin{DoxyCompactList}\small\item\em This function takes as argument a pointer to a connection pool. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{conn_8h_a8b500bf2c8f0f7c2648655be64fac01b}\label{conn_8h_a8b500bf2c8f0f7c2648655be64fac01b}} 
+int {\bfseries conn\+\_\+get\+\_\+pool\+\_\+size} (\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$conn\+\_\+pool)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This interface is the specification for the {\ttfamily \mbox{\hyperlink{structConnectionPool}{Connection\+Pool}}} object which handles all of the current connections that the proxy server is handling. 
+
+It is important to note that each function occurs atomically in terms of multiple threads calling the functions. This is done through a simple mutex that locks before the function runs and after the function runs so that data is consistent and synchronized across each thread. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{conn_8h_aab42b966daaa88813b48d8448b06a3c7}\label{conn_8h_aab42b966daaa88813b48d8448b06a3c7}} 
+\index{conn.h@{conn.h}!conn\_copy\_fd\_sets@{conn\_copy\_fd\_sets}}
+\index{conn\_copy\_fd\_sets@{conn\_copy\_fd\_sets}!conn.h@{conn.h}}
+\doxysubsubsection{\texorpdfstring{conn\_copy\_fd\_sets()}{conn\_copy\_fd\_sets()}}
+{\footnotesize\ttfamily int conn\+\_\+copy\+\_\+fd\+\_\+sets (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$}]{conn\+\_\+pool,  }\item[{fd\+\_\+set $\ast$}]{rd\+\_\+set\+\_\+cpy,  }\item[{fd\+\_\+set $\ast$}]{wr\+\_\+set\+\_\+cpy,  }\item[{int $\ast$}]{nfds }\end{DoxyParamCaption})}
+
+
+
+This function takes as argument a pointer to a connection pool. 
+
+The caller specifies the argument rd\+\_\+set\+\_\+cpy (which is the read set that will be passed to select(2)) and wr\+\_\+set\+\_\+cpy (which is the write set that will be passed to select), and the connection pool\textquotesingle{}s fd sets are copied over to the respective copy set. The function fails if either of the pointers to the sets point to a {\ttfamily NULL} reference or if the connection pool points to a {\ttfamily NULL} value. This function also takes in a {\ttfamily nfds} argument which is a pointer to an integer value. The max file descriptor value is copied over to that pointer. If {\ttfamily nfds} points to a {\ttfamily NULL} value, then the function call fails.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn\+\_\+pool} & A pointer to a connection pool that holds all of the current connections \\
+\hline
+{\em rd\+\_\+set\+\_\+cpy} & The read set passed by the caller in which the function copies the pool\textquotesingle{}s read set to rd\+\_\+set\+\_\+cpy \\
+\hline
+{\em wr\+\_\+set\+\_\+cpy} & The write set passed by the caller in which the function copies the pool\textquotesingle{}s write set to wr\+\_\+set\+\_\+cpy \\
+\hline
+{\em nfds} & The pointer to an integer that will have its value to that address replaced by the current max file descriptor value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the copying succeeds. Otherwise, -\/1. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conn_8h_ae2fdf6d8b120978ce2e0e99d96957abb}\label{conn_8h_ae2fdf6d8b120978ce2e0e99d96957abb}} 
+\index{conn.h@{conn.h}!conn\_destroy@{conn\_destroy}}
+\index{conn\_destroy@{conn\_destroy}!conn.h@{conn.h}}
+\doxysubsubsection{\texorpdfstring{conn\_destroy()}{conn\_destroy()}}
+{\footnotesize\ttfamily void conn\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$}]{conn\+\_\+pool }\end{DoxyParamCaption})}
+
+
+
+TODO honestly fix this and make it mroe clear. 
+
+This function shuts down any of the connections that are still in the pool. The function invokes the shutdown(2) to shut down any socket file descriptors that belong to that connection. In addition, calling this function will free the block being pointed to by conn\+\_\+pool.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn\+\_\+pool} & A pointer to a connection pool that holds all of the current connections \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{conn_8h_a827144fb78571fe9a99a0e700742293e}\label{conn_8h_a827144fb78571fe9a99a0e700742293e}} 
+\index{conn.h@{conn.h}!conn\_insert\_fd@{conn\_insert\_fd}}
+\index{conn\_insert\_fd@{conn\_insert\_fd}!conn.h@{conn.h}}
+\doxysubsubsection{\texorpdfstring{conn\_insert\_fd()}{conn\_insert\_fd()}}
+{\footnotesize\ttfamily int conn\+\_\+insert\+\_\+fd (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$}]{conn\+\_\+pool,  }\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Inserts a new connection into the connection pool. 
+
+The new connection is described by the file descriptor fd and the connection pool is represented as conn\+\_\+pool. The function fails if including this new connection exceeds the maximum number of possible connections that select(2) can handle. In this case, it is FD\+\_\+\+SETSIZE (which is defined to be 1024 as specified in select(2)) connections. The function also fails if the conn\+\_\+pool pointer points to a {\ttfamily NULL} address. If the connection pool holds the current fd already, nothing is done, but the call succeeds.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn\+\_\+pool} & A pointer to a connection pool that holds all of the current connections \\
+\hline
+{\em fd} & The socket file descriptor that represents the new connection \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the new connection has been succesfully inserted into the pool. Otherwise, it returns -\/1. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conn_8h_a0340036eb0c84ec60969fe890b94ae81}\label{conn_8h_a0340036eb0c84ec60969fe890b94ae81}} 
+\index{conn.h@{conn.h}!conn\_pool\_init@{conn\_pool\_init}}
+\index{conn\_pool\_init@{conn\_pool\_init}!conn.h@{conn.h}}
+\doxysubsubsection{\texorpdfstring{conn\_pool\_init()}{conn\_pool\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structConnectionPool}{Connection\+Pool}}$\ast$ conn\+\_\+pool\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initializes a new connection pool to handle user connections. 
+
+The caller should be using a function like {\ttfamily select(2)} to handle the pool. The initialiation fails if memory allocation for the \mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} fails.
+
+\begin{DoxyReturn}{Returns}
+On success, it returns a pointer to the new connection pool. Otherwise, on failure, it returns NULL. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{conn_8h_a686ebc70a031da05e49cc41194cba212}\label{conn_8h_a686ebc70a031da05e49cc41194cba212}} 
+\index{conn.h@{conn.h}!conn\_remove\_fd@{conn\_remove\_fd}}
+\index{conn\_remove\_fd@{conn\_remove\_fd}!conn.h@{conn.h}}
+\doxysubsubsection{\texorpdfstring{conn\_remove\_fd()}{conn\_remove\_fd()}}
+{\footnotesize\ttfamily int conn\+\_\+remove\+\_\+fd (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structConnectionPool}{Connection\+Pool}} $\ast$}]{conn\+\_\+pool,  }\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Removes a connection from the connection pool. 
+
+The connection that gets removed is specified by the file descriptor fd. In addition, it also fails if conn\+\_\+pool is {\ttfamily NULL}. If fd is not in the pool, then the call still succeeds. The call, however, does fail if the pool size is currently less than or equal to 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em conn\+\_\+pool} & A pointer to a connection pool that holds all of the current connections \\
+\hline
+{\em fd} & The socket file descriptor that represents the connection to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if the new connection has been succesfully removed from the pool. Otherwise, it returns -\/1. 
+\end{DoxyReturn}
