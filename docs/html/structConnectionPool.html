@@ -73,8 +73,17 @@ $(function() {
 <p><code>#include &lt;<a class="el" href="conn_8h_source.html">include/conn.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the object that represents the connection pool. </p>
-<p>This is the object responsible for holding each of the user's connection that can later be passed to an event handler like <code>select(2)</code> and, then, further processes the connections that correspond to some socket file descriptor. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<p>This is the object responsible for holding each of the user's connection that can later be passed to an event handler like <code>select(2)</code> and, then, further processes the connections that correspond to some socket file descriptor. The structure looks like this in the source file:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>connectionPool {</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pool_size; <span class="comment">// capped at FD_SETSIZE</span></div>
+<div class="line">    <span class="keyword">struct </span>{</div>
+<div class="line">        fd_set rd_set;</div>
+<div class="line">        fd_set wr_set;</div>
+<div class="line">    } rdwr_fd_sets; </div>
+<div class="line">    <a class="code" href="structPrioQueue.html">PrioQueue</a> *pq;</div>
+<div class="line">};</div>
+<div class="ttc" id="astructPrioQueue_html"><div class="ttname"><a href="structPrioQueue.html">PrioQueue</a></div><div class="ttdoc">This is the structure that represents the priority queue.</div></div>
+</div><!-- fragment --> </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/<a class="el" href="conn_8h_source.html">conn.h</a></li>
 </ul>
 </div><!-- contents -->

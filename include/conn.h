@@ -28,7 +28,20 @@
  * connection that can later be passed to an
  * event handler like `select(2)` and, then,
  * further processes the connections that correspond
- * to some socket file descriptor.
+ * to some socket file descriptor. The structure looks
+ * like this in the source file:
+ *
+ * ```
+ * struct connectionPool {
+ *     unsigned int pool_size; // capped at FD_SETSIZE
+ *     struct {
+ *         fd_set rd_set;
+ *         fd_set wr_set;
+ *     } rdwr_fd_sets; 
+ *     PrioQueue *pq;
+ * };
+ *
+ * ```
  *
  */
 

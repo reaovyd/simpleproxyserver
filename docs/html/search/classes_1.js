@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['prioqueue_16',['PrioQueue',['../structPrioQueue.html',1,'']]]
+  ['prioqueue_17',['PrioQueue',['../structPrioQueue.html',1,'']]]
 ];

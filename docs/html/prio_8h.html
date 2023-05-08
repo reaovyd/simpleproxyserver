@@ -97,13 +97,42 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab5bebc94246b951e31d4ee91be888d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes an argument <code>val</code>, a value given by the caller so that the function can insert this value into the priority queue.  <a href="prio_8h.html#ab5bebc94246b951e31d4ee91be888d63">More...</a><br /></td></tr>
 <tr class="separator:ab5bebc94246b951e31d4ee91be888d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51a22547f511e78a6ecd790eeff9a255"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prio_8h.html#a51a22547f511e78a6ecd790eeff9a255">prio_remove_max</a> (<a class="el" href="structPrioQueue.html">PrioQueue</a> *pq, int *get_max)</td></tr>
-<tr class="memdesc:a51a22547f511e78a6ecd790eeff9a255"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function operates the same as <code>prio_peek_max</code> expect for the fact that it removes the current top element.  <a href="prio_8h.html#a51a22547f511e78a6ecd790eeff9a255">More...</a><br /></td></tr>
+<tr class="memdesc:a51a22547f511e78a6ecd790eeff9a255"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function operates the same as <code>prio_peek_max</code> except for the fact that it removes the current top element.  <a href="prio_8h.html#a51a22547f511e78a6ecd790eeff9a255">More...</a><br /></td></tr>
 <tr class="separator:a51a22547f511e78a6ecd790eeff9a255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a930a1773b7891fceefe85337bba8a1fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prio_8h.html#a930a1773b7891fceefe85337bba8a1fc">prio_destroy</a> (<a class="el" href="structPrioQueue.html">PrioQueue</a> *pq)</td></tr>
+<tr class="memdesc:a930a1773b7891fceefe85337bba8a1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function frees the block pointed to by the priority queue <code>pq</code>.  <a href="prio_8h.html#a930a1773b7891fceefe85337bba8a1fc">More...</a><br /></td></tr>
+<tr class="separator:a930a1773b7891fceefe85337bba8a1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple priority queue implemented by a binary heap. </p>
 <p>The priority queue is represented as an array. The operations supported are inserting into the priority queue, removing the max value from the priority queue, and getting the max value from priority queue. The capacity of the priority queue is bounded by a fixed size of 1024. The priority queue is implemented by a max heap. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a930a1773b7891fceefe85337bba8a1fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a930a1773b7891fceefe85337bba8a1fc">&#9670;&nbsp;</a></span>prio_destroy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void prio_destroy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structPrioQueue.html">PrioQueue</a> *&#160;</td>
+          <td class="paramname"><em>pq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function frees the block pointed to by the priority queue <code>pq</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pq</td><td>A poitner to a priority queue object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af9e5f48b48b0a1e433d8d8131b73d169"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9e5f48b48b0a1e433d8d8131b73d169">&#9670;&nbsp;</a></span>prio_init()</h2>
 
@@ -191,7 +220,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Takes an argument <code>get_max</code>, a pointer given by the caller so that the function can copy to that address the max value of the priority queue <code>pq</code>. </p>
-<p>The function returns -1 and no copying is done if the function fails. The function will fail if there is nothing currently in the priority queue.</p>
+<p>The function returns -1 and no copying is done if the function fails. The function will fail if there is nothing currently in the priority queue. Also, if <code>get_max</code> points to the <code>NULL</code> address, then the function also fails.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pq</td><td>A pointer to a priority queue object </td></tr>
@@ -229,7 +258,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function operates the same as <code>prio_peek_max</code> expect for the fact that it removes the current top element. </p>
+<p>This function operates the same as <code>prio_peek_max</code> except for the fact that it removes the current top element. </p>
 <p>Similar to <code>prio_peek_max</code>, the function fails and returns -1 if there is nothing inside the priority queue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

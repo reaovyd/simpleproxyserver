@@ -14,7 +14,21 @@ This is the object that represents the connection pool.
 \doxysubsection{Detailed Description}
 This is the object that represents the connection pool. 
 
-This is the object responsible for holding each of the user\textquotesingle{}s connection that can later be passed to an event handler like {\ttfamily select(2)} and, then, further processes the connections that correspond to some socket file descriptor. 
+This is the object responsible for holding each of the user\textquotesingle{}s connection that can later be passed to an event handler like {\ttfamily select(2)} and, then, further processes the connections that correspond to some socket file descriptor. The structure looks like this in the source file\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct }connectionPool \{}
+\DoxyCodeLine{    \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pool\_size; \textcolor{comment}{// capped at FD\_SETSIZE}}
+\DoxyCodeLine{    \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{        fd\_set rd\_set;}
+\DoxyCodeLine{        fd\_set wr\_set;}
+\DoxyCodeLine{    \} rdwr\_fd\_sets; }
+\DoxyCodeLine{    \mbox{\hyperlink{structPrioQueue}{PrioQueue}} *pq;}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+ 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

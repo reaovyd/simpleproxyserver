@@ -21,7 +21,9 @@ int \mbox{\hyperlink{prio_8h_aed22b96130938ab317c5e06e33fae093}{prio\+\_\+peek\+
 int \mbox{\hyperlink{prio_8h_ab5bebc94246b951e31d4ee91be888d63}{prio\+\_\+insert}} (\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$pq, int val)
 \begin{DoxyCompactList}\small\item\em Takes an argument {\ttfamily val}, a value given by the caller so that the function can insert this value into the priority queue. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{prio_8h_a51a22547f511e78a6ecd790eeff9a255}{prio\+\_\+remove\+\_\+max}} (\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$pq, int $\ast$get\+\_\+max)
-\begin{DoxyCompactList}\small\item\em This function operates the same as {\ttfamily prio\+\_\+peek\+\_\+max} expect for the fact that it removes the current top element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This function operates the same as {\ttfamily prio\+\_\+peek\+\_\+max} except for the fact that it removes the current top element. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{prio_8h_a930a1773b7891fceefe85337bba8a1fc}{prio\+\_\+destroy}} (\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$pq)
+\begin{DoxyCompactList}\small\item\em This function frees the block pointed to by the priority queue {\ttfamily pq}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -30,6 +32,21 @@ A simple priority queue implemented by a binary heap.
 The priority queue is represented as an array. The operations supported are inserting into the priority queue, removing the max value from the priority queue, and getting the max value from priority queue. The capacity of the priority queue is bounded by a fixed size of 1024. The priority queue is implemented by a max heap. 
 
 \doxysubsection{Function Documentation}
+\mbox{\Hypertarget{prio_8h_a930a1773b7891fceefe85337bba8a1fc}\label{prio_8h_a930a1773b7891fceefe85337bba8a1fc}} 
+\index{prio.h@{prio.h}!prio\_destroy@{prio\_destroy}}
+\index{prio\_destroy@{prio\_destroy}!prio.h@{prio.h}}
+\doxysubsubsection{\texorpdfstring{prio\_destroy()}{prio\_destroy()}}
+{\footnotesize\ttfamily void prio\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structPrioQueue}{Prio\+Queue}} $\ast$}]{pq }\end{DoxyParamCaption})}
+
+
+
+This function frees the block pointed to by the priority queue {\ttfamily pq}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pq} & A poitner to a priority queue object \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{prio_8h_af9e5f48b48b0a1e433d8d8131b73d169}\label{prio_8h_af9e5f48b48b0a1e433d8d8131b73d169}} 
 \index{prio.h@{prio.h}!prio\_init@{prio\_init}}
 \index{prio\_init@{prio\_init}!prio.h@{prio.h}}
@@ -77,7 +94,7 @@ The function returns -\/1 and no insertion is done if the function fails. The fu
 
 Takes an argument {\ttfamily get\+\_\+max}, a pointer given by the caller so that the function can copy to that address the max value of the priority queue {\ttfamily pq}. 
 
-The function returns -\/1 and no copying is done if the function fails. The function will fail if there is nothing currently in the priority queue.
+The function returns -\/1 and no copying is done if the function fails. The function will fail if there is nothing currently in the priority queue. Also, if {\ttfamily get\+\_\+max} points to the {\ttfamily NULL} address, then the function also fails.
 
 
 \begin{DoxyParams}{Parameters}
@@ -97,7 +114,7 @@ The function returns -\/1 and no copying is done if the function fails. The func
 
 
 
-This function operates the same as {\ttfamily prio\+\_\+peek\+\_\+max} expect for the fact that it removes the current top element. 
+This function operates the same as {\ttfamily prio\+\_\+peek\+\_\+max} except for the fact that it removes the current top element. 
 
 Similar to {\ttfamily prio\+\_\+peek\+\_\+max}, the function fails and returns -\/1 if there is nothing inside the priority queue.
 
